@@ -9,7 +9,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://chordbay.eu"
+    // Replace with Google API or your scraping proxy
+    private const val BASE_URL = "https://www.googleapis.com/customsearch/v1/"
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -23,13 +24,11 @@ object RetrofitInstance {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(httpClient)
-            .addConverterFactory(ScalarsConverterFactory.create()) // handles plain text
+            .addConverterFactory(ScalarsConverterFactory.create()) 
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
-    val authApiService by lazy {
-        retrofit.create(AuthApiService::class.java)
-    }
+    
     val api by lazy {
         retrofit.create(ChordsBayApiService::class.java)
     }
