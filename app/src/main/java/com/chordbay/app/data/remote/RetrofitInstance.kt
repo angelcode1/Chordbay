@@ -6,30 +6,31 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object RetrofitInstance {
-    // Replace with Google API or your scraping proxy
+    // Thinned to only support the new Search API
     private const val BASE_URL = "https://www.googleapis.com/customsearch/v1/"
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
+
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
         .build()
+
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(httpClient)
-            .addConverterFactory(ScalarsConverterFactory.create()) 
+            // ScalarsConverter removed as it's no longer needed for plain-text backend responses
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
-    
-    val api by lazy {
-        retrofit.create(ChordsBayApiService::class.java)
+
+    val api: ChordsBayApiService by lazy {
+        retrofit.create(ChordsBayApiService.kt::class.java)
     }
 }
