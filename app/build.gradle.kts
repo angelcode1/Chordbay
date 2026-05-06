@@ -97,4 +97,5 @@ dependencies {
     implementation("com.mohamedrejeb.richeditor:richeditor-compose:1.0.0-rc13")
 
     implementation("sh.calvin.reorderable:reorderable:3.0.0")
+    implementation("org.jsoup:jsoup:1.15.4")
 }
