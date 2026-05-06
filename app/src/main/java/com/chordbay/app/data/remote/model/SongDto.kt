@@ -10,12 +10,11 @@ data class SongDto(
     @Json(name = "title")
     val title: String,
     @Json(name = "artist")
-    val artist: String,
+    val artist: String = "Unknown",
     @Json(name = "content")
-    val content: String,
-    @Json(name = "isPublic")
-    val isPublic: Boolean = true,
+    var content: String = "", // Will be populated after scraping the 'link'
+    @Json(name = "link")
+    val sourceUrl: String? = null, 
     @Json(name = "germanNotation")
-    val germanNotation: Boolean,
-
+    val germanNotation: Boolean = false
 )
